@@ -24,31 +24,22 @@ void halUsbInit(void)
 {
 
 #ifdef USE_IRQ_RX
-  volatile unsigned char i;
-  for (i = 0;i < 255; i++){
-    halUsbReceiveBuffer[i]='\0';
-  }
-  bufferSize = 0;
+	volatile unsigned char i;
+	for (i = 0;i < 255; i++){
+	halUsbReceiveBuffer[i]='\0';
+	}
+	bufferSize = 0;
 #endif
-	  
-  USB_PORT_SEL |= USB_PIN_RXD + USB_PIN_TXD;
-  USB_PORT_DIR |= USB_PIN_TXD;
-  USB_PORT_DIR &= ~USB_PIN_RXD;
-  
-  UCA0CTL1 = UCSWRST;                          //Reset State
-  UCA0CTL0 = UCMODE_0;
-  
-  //UCA0CTL0 &= ~UC7BIT;                      // 8bit char
-  UCA0CTL1 |= UCSSEL_2;
-  UCA0BR0 = 1666 % 256;                             // 8Mhz/57600=138
-  UCA0BR1 = 1666 / 256;
 
-  UCA0ABCTL = 0;
+	USB_PORT_SEL |= USB_PIN_RXD + USB_PIN_TXD;
+	USB_PORT_DIR |= USB_PIN_TXD;
+	USB_PORT_DIR &= ~USB_PIN_RXD;
 
-  UCA0MCTL = (6 << 1);
+	UCA0CTL1 = UCSWRST;                          //Reset State
+	UCA0CTL0 = UCMODE_0;
 
-  // set 115200 baud
-  	UCA0CTL1 |= UCSSEL_2;
+	// set 115200 baud
+	UCA0CTL1 |= UCSSEL_2;
 	UCA0BR0 = 138 % 256;                             // 8Mhz/57600=138
 	UCA0BR1 = 138 / 256;
 
@@ -58,9 +49,9 @@ void halUsbInit(void)
 
 
 
-  UCA0CTL1 &= ~UCSWRST;
-  // UCA0IE |= UCRXIE;						//enable receive interrupts
-  // __bis_SR_register(GIE);                   // Enable Interrupts
+	UCA0CTL1 &= ~UCSWRST;
+	// UCA0IE |= UCRXIE;						//enable receive interrupts
+	// __bis_SR_register(GIE);                   // Enable Interrupts
 }
 
 /**********************************************************************//**
@@ -126,7 +117,7 @@ interrupt(USCI_A1_VECTOR) USCI_A1_ISR (void)
 
 // provide putchar used by printf
 /*
-// ATRABER: DO NOT UES as it collides with standard library of MSP430 compiler
+// ATRABER: DO NOT USE as it collides with standard library of MSP430 compiler
 int putchar(int c){
     halUsbSendChar(c);
     return 1;
