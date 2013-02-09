@@ -39,5 +39,3 @@
 void hal_cpu_disable_irqs(void);
 void hal_cpu_enable_irqs(void);
 void hal_cpu_enable_irqs_and_sleep(void);
-
- 
